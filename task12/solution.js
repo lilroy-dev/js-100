@@ -1,31 +1,63 @@
-function countOccurrences2(strings) {
-   return  strings.reduce((acc, cur) => {
-       return {...acc, [cur] :  Object.hasOwn(acc, cur)  ? acc[cur] + 1 : 1};
-    },{})
-}
+const  findSecondLargest1 = (arr) => {
+    if (arr.length === 0) return null;
+    const max = Math.max(...arr);
+    const isSame = arr.every(item => item === max);
+    if(isSame) return null;
+    let preMax = -Infinity;
 
-function countOccurrences3(strings) {
-    return  strings.reduce((acc, cur) => {
-        return {...acc, [cur] :  acc[cur]  ? acc[cur] + 1 : 1};
-    },{})
-}
-
-function countOccurrences(strings) {
-    const result = new Map();
-
-    for (let i = 0; i < strings.length; i++) {
-        if(result.has(strings[i])) {
-            result.set(strings[i], result.get(strings[i]) + 1);
-        } else {
-            result.set(strings[i], 1);
+    for (let i = 0; i < arr.length; i++) {
+        if(preMax < arr[i] &&  arr[i] !== max) {
+            preMax = arr[i];
         }
     }
-    // Преобразуем Map в обычный объект
-    return Object.fromEntries(result);
+
+    return preMax;
 }
 
-console.log(countOccurrences(["apple", "banana", "apple", "orange", "banana", "banana"]));
-// Ожидаемый результат: { apple: 2, banana: 3, orange: 1 }
 
-console.log(countOccurrences([1, 2, 2, 3, 4, 4, 4]));
-// Ожидаемый результат: { 1: 1, 2: 2, 3: 1, 4: 3 }
+
+const findSecondLargest2 = (arr) => {
+    if (arr.length < 2) return null; // Если меньше двух элементов, нет второго максимума
+
+    let max = -Infinity;
+    let preMax = -Infinity;
+
+    for (let num of arr) {
+        if (num > max) {
+            preMax = max; // Предыдущее максимальное значение становится вторым
+            max = num;    // Обновляем максимальное значение
+        } else if (num > preMax && num !== max) {
+            preMax = num; // Обновляем preMax, если это число меньше max, но больше preMax
+        }
+    }
+
+    return preMax === -Infinity ? null : preMax; // Если preMax не обновился, возвращаем null
+};
+
+
+
+const findSecondLargest = (arr) => {
+    if (arr.length < 2) return null; // Если меньше двух элементов, возвращаем null
+
+    const uniqueNumbers = [...new Set(arr)]; // Убираем дубликаты
+    if (uniqueNumbers.length < 2) return null; // Если уникальных чисел меньше двух, возвращаем null
+
+    uniqueNumbers.sort((a, b) => b - a); // Сортируем массив по убыванию
+    return uniqueNumbers[1]; // Второй элемент — второе наибольшее число
+};
+
+
+
+
+
+console.log(findSecondLargest([1, 2, 3, 4, 5]));
+// Ожидаемый результат: 4
+
+console.log(findSecondLargest([10, 10, 10]));
+// Ожидаемый результат: null
+
+console.log(findSecondLargest([5]));
+// Ожидаемый результат: null
+
+console.log(findSecondLargest([-10, -20, -30, -40, -50]));
+// Ожидаемый результат: -20
