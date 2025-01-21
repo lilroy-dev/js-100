@@ -4,7 +4,6 @@ const countdown2 = (num) => {
     for (let i = num; i >= 0; i--) {
         res.push(i);
     }
-
     return res
 }
 
