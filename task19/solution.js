@@ -1,23 +1,30 @@
-const isSubset1 = (arr1, arr2) => {
-    if(!arr2.length) return true;
-    for (let i = 0; i < arr2.length; i++) {
-        if(!arr1.includes(arr2[i])){
-            return false;
+const findIntersection = (arr1, arr2) => {
+    if (!arr1.length || !arr2.length) return [];
+    const res = [];
+
+    for (let i = 0; i < arr1.length; i++) {
+        if(arr2.includes(arr1[i])) {
+            res.push(arr1[i]);
         }
     }
-    return true;
+    return  res
 };
 
 
+const findIntersection2 = (arr1, arr2) => {
+    if (!arr1.length || !arr2.length) return [];
+    return arr1.filter(item => arr2.includes(item));
+};
 
-const isSubset = (arr1, arr2) => arr2.every(item => arr1.includes(item));
 
+findIntersection([1, 2, 3, 4], [3, 4, 5, 6]);
+// Ожидаемый результат: [3, 4]
 
-console.log(isSubset([1, 2, 3, 4, 5], [2, 4]));
-// Ожидаемый результат: true (все элементы массива [2, 4] содержатся в массиве [1, 2, 3, 4, 5])
+findIntersection(['a', 'b', 'c'], ['c', 'd', 'e']);
+// Ожидаемый результат: ['c']
 
-console.log(isSubset([1, 2, 3, 4, 5], [6]));
-// Ожидаемый результат: false (6 отсутствует в массиве [1, 2, 3, 4, 5])
+findIntersection([1, 2, 3], [4, 5, 6]);
+// Ожидаемый результат: []
 
-console.log(isSubset([1, 2, 3, 4, 5], []));
-// Ожидаемый результат: true (пустой массив всегда является подмножеством)
+findIntersection([], [1, 2, 3]);
+// Ожидаемый результат: []
