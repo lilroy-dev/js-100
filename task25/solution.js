@@ -12,7 +12,6 @@ function deepClone(obj) {
     // Если obj — это объект, создаем новый объект и клонируем каждое свойство
     const clonedObj = {};
     for (const key in obj) {
-           console.log('obj', obj)
         if (obj.hasOwnProperty(key)) {
             clonedObj[key] = deepClone(obj[key]);
         }
